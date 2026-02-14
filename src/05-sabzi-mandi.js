@@ -31,4 +31,37 @@
  */
 export function sabziMandiBill(shoppingList, priceList) {
   // Your code here
+//    * Rules (use for...of loop):
+//  *   - shoppingList is an array of objects: [{ name: "aloo", qty: 2 }, ...]
+//  *   - priceList is an object: { aloo: 30, tamatar: 40, ... }
+//  *   - Loop through each item in shoppingList using for...of
+//  *   - Skip the item if:
+//  *     (a) sabzi ka naam priceList mein nahi hai (not available in mandi)
+//  *     (b) price per kg > Rs 80 (too expensive, Amma says "bahut mehenga hai!")
+//  *   - For valid items, add to bill and build items array
+
+    if(!Array.isArray(shoppingList) || shoppingList.length === 0 || typeof priceList !== "object" || priceList === undefined || Array.isArray(priceList))
+      return { items: [], totalBill: 0 }
+    
+    let totalBill = 0;
+    let items = []
+    
+
+    for(const item of shoppingList)
+    {
+      const key = item.name.replaceAll(" ", "_") 
+      let cost = priceList[key]
+      let name = item.name
+      let qty = item.qty
+      let netCost = cost*qty
+
+      if(cost>80 || cost === undefined)
+        continue;
+
+      totalBill+=netCost
+      items.push({name, qty, cost: netCost})
+
+    }
+
+    return {items, totalBill}
 }

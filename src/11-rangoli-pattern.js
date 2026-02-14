@@ -37,4 +37,50 @@
  */
 export function rangoli(n) {
   // Your code here
+   if(!Number.isInteger(n) || n<=0)
+    return []
+
+   let rangoliArray = []
+
+  for(let i=1;i<=n;i++)
+{
+    let line = ""
+
+    for(let j=1;j<=(n-i);j++)
+        line += " "
+
+    for(let j=1;j<=i;j++)
+    {
+      if(j===i)
+        line += "*"
+
+      else
+      line += "* "
+
+    }
+        
+
+    rangoliArray.push(line)
+}
+
+for(let i = n-1 ; i >= 1 ; i--)
+{
+    let line = ""
+
+    for(let j=1 ; j <= (n-i) ; j++)
+        line += " "
+
+    for(let j=1 ; j <= i ; j++)
+    {
+        if(j === i)
+            line += "*"
+        else
+            line += "* "
+    }
+
+    rangoliArray.push(line)
+}
+    
+
+  return rangoliArray
 }

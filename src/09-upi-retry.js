@@ -36,4 +36,34 @@
  */
 export function upiRetry(outcomes) {
   // Your code here
+  if(!Array.isArray(outcomes) || outcomes.length === 0)
+    return { attempts: 0, success: false, totalWaitTime: 0 }
+
+  let attempts =0;
+  let success = false;
+  let totalWaitTime = 0;
+  let itr=0;
+
+  do{
+
+    if(outcomes[itr].toLowerCase() === "success")
+    {
+      success = true;
+      attempts++;
+    }
+
+    else{
+        if(attempts<4)
+        totalWaitTime += (2** itr)
+      
+      attempts++;
+    }
+
+     itr++;
+
+  }while(success === false && attempts<5)
+
+    return { attempts, success, totalWaitTime}
+
+
 }

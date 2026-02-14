@@ -37,5 +37,84 @@
  *   // Sorted: CSK(3), RCB(1), MI(0)
  */
 export function iplPointsTable(matches) {
-  // Your code here
+
+  if(!Array.isArray(matches) || matches.length === 0)
+    return []
+
+  let pointsTable = {}
+
+  for(let i = 0 ; i < matches.length ; i++)
+  {
+    let match = matches[i]
+
+    updateTable(match.team1 , match)
+    updateTable(match.team2 , match)
+  }
+
+
+  function updateTable(teamName , match)
+  {
+
+    if(!pointsTable[teamName])
+    {
+      pointsTable[teamName] = {
+        team : teamName ,
+        played : 0 ,
+        won : 0 ,
+        lost : 0 ,
+        tied : 0 ,
+        noResult : 0 ,
+        points : 0
+      }
+    }
+
+
+    let teamObj = pointsTable[teamName]
+
+    teamObj.played += 1
+
+
+    if(match.result.toLowerCase() === "win")
+    {
+
+      if(match.winner && match.winner.toUpperCase() === teamName.toUpperCase())
+      {
+        teamObj.won += 1
+        teamObj.points += 2
+      }
+
+      else
+        teamObj.lost += 1
+    }
+
+    else
+    {
+      teamObj.points += 1
+
+      if(match.result.toLowerCase() === "no_result")
+        teamObj.noResult += 1
+
+      else
+        teamObj.tied += 1
+    }
+
+  }
+   
+  
+  pointsTable = Object.values(pointsTable)
+
+  pointsTable.sort((a , b) => {
+
+    if(b.points !== a.points)
+      return b.points - a.points
+
+    if(a.team < b.team) return -1
+    if(a.team > b.team) return 1
+    return 0
+
+  })
+
+  return pointsTable
+
 }
+
